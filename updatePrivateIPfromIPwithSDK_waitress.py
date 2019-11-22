@@ -31,8 +31,15 @@
 import json
 import oci
 import email.utils
+			
+# Authenticate with Instance Principal
+signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner()
+
+''' deactivated -> moving to Instance Principals authentication
 from oci.config import from_file
 config = from_file(profile_name="essilor")
+'''
+
 # need to run flask in virtual environnement pip install flask
 from flask import Flask, request
 from waitress import serve # needed for waitress
@@ -339,7 +346,7 @@ def IndexforFlask():
 
 
 if __name__ == '__main__':   
-    virtual_network = oci.core.VirtualNetworkClient(config)
+    virtual_network = oci.core.VirtualNetworkClient(config={}, signer=signer)
     count=0
     EntriesIPonly=[]
     #EntriesIPonly is a new list with all secondary IP address per subnet
