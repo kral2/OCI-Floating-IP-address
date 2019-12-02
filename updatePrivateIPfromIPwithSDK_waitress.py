@@ -29,6 +29,7 @@
 
 
 import json
+import sdnotify
 import oci
 import email.utils
 from oci.config import from_file
@@ -36,6 +37,8 @@ config = from_file(profile_name="myprofile")
 # need to run flask in virtual environnement pip install flask
 from flask import Flask, request
 from waitress import serve # needed for waitress
+
+notifier = sdnotify.SystemNotifier()
 
 app = Flask(__name__)
 app.debug = True   # need this for autoreload as and stack trace
@@ -337,6 +340,8 @@ def IndexforFlask():
         </html>
         '''
 
+notifier.notify('READY=1')
+notifier.notify('STATUS=Running')
 
 if __name__ == '__main__':   
     virtual_network = oci.core.VirtualNetworkClient(config)
