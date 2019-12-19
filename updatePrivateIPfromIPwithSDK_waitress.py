@@ -45,7 +45,7 @@ config = from_file(profile_name="myprofile")
 from flask import Flask, request
 from waitress import serve # needed for waitress
 
-notifier = sdnotify.SystemNotifier()
+notifier = sdnotify.SystemdNotifier()
 
 app = Flask(__name__)
 app.debug = True   # need this for autoreload as and stack trace
